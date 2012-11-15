@@ -56,8 +56,8 @@ public class ClienteRepository {
 				final Calendar dataNasc = customerServiceResponse.getCustomer().getBirthday();
 				final Endereco endereco = map(customerServiceResponse.getCustomer().getAddress());
 				final String telefone = customerServiceResponse.getCustomer().getTelephone();
-				
-				cliente = new Cliente(nome, sexo, dataNasc, telefone, endereco);
+				final String email = customerServiceResponse.getCustomer().getEmail();
+				cliente = new Cliente(nome, sexo, dataNasc, telefone, endereco, email);
 			}	
 
 			return cliente;

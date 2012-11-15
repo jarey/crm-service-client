@@ -12,13 +12,15 @@ public class Cliente implements Serializable {
 	private final Calendar dataNascimento;
 	private final String telefone;
 	private final Endereco endereco;
+	private final String email;
 	
-	public Cliente(final String nome, final String sexo, final Calendar dataNascimento, final String telefone, final Endereco endereco) {
+	public Cliente(final String nome, final String sexo, final Calendar dataNascimento, final String telefone, final Endereco endereco, final String email) {
 		this.nome = nome;
 		this.sexo = sexo;
 		this.dataNascimento = dataNascimento;
 		this.telefone = telefone;
 		this.endereco = endereco;
+		this.email = email;
 	}
 	public String getNome() {
 		return nome;
@@ -51,5 +53,9 @@ public class Cliente implements Serializable {
 	
 	public Endereco getEndereco() {
 		return this.endereco;
+	}
+	
+	public String getEmail() {
+		return this.email;
 	}
 }
