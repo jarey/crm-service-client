@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CustomerService" targetNamespace="http://service.crm.alexandre.com.br/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.crm.alexandre.com.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.crm.alexandre.com.br/" xmlns:tns="http://service.crm.alexandre.com.br/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CustomerServiceRequest" type="tns:CustomerServiceRequestType"/>
+  <xs:element name="CustomerServiceResponse" type="tns:CustomerServiceResponseType"/>
+  <xs:element name="getCustomerInfo" type="tns:getCustomerInfo"/>
+  <xs:element name="getCustomerInfoResponse" type="tns:getCustomerInfoResponse"/>
+  <xs:complexType name="getCustomerInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customerServiceRequest" type="tns:CustomerServiceRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomerServiceRequestType">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCustomerInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customerServiceResponse" type="tns:CustomerServiceResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomerServiceResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customer" type="tns:CustomerType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomerType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="sex" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="birthday" type="xs:date"/>
+      <xs:element minOccurs="0" name="telephone" type="xs:string"/>
+      <xs:element minOccurs="0" name="address" type="tns:AddressType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="street" type="xs:string"/>
+      <xs:element minOccurs="0" name="city" type="xs:string"/>
+      <xs:element minOccurs="0" name="zipCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="customerServiceExceptionInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:int"/>
+      <xs:element minOccurs="0" name="date" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerException" type="tns:CustomerException"/>
+  <xs:complexType name="CustomerException">
+    <xs:sequence>
+      <xs:element name="customerServiceExceptionInfo" nillable="true" type="tns:customerServiceExceptionInfo"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCustomerInfoResponse">
+    <wsdl:part element="tns:getCustomerInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CustomerServiceException">
+    <wsdl:part element="tns:CustomerException" name="CustomerServiceException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerInfo">
+    <wsdl:part element="tns:getCustomerInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CustomerService">
+    <wsdl:operation name="getCustomerInfo">
+      <wsdl:input message="tns:getCustomerInfo" name="getCustomerInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getCustomerInfoResponse" name="getCustomerInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerServiceException" name="CustomerServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomerServiceSoapBinding" type="tns:CustomerService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getCustomerInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCustomerInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomerInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerServiceException">
+        <soap:fault name="CustomerServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerService">
+    <wsdl:port binding="tns:CustomerServiceSoapBinding" name="CustomerServicePort">
+      <soap:address location="http://localhost:9090/crm-service/CustomerService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
